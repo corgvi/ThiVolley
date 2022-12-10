@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "515083631892",
+    "project_id": "thivolley-831ab",
+    "storage_bucket": "thivolley-831ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:515083631892:android:44da2d134a26ee9e989601",
+        "android_client_info": {
+          "package_name": "com.example.thivolley"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "515083631892-d7m4ria8fge1k3bq9fdi1kog56fanfud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDYZrqoG9VaCDVHUb8uWsdbIDi1BubTfnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "515083631892-d7m4ria8fge1k3bq9fdi1kog56fanfud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
