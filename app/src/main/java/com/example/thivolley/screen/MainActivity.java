@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                         edName.setText("");
                         edImg.setText("");
                         Toast.makeText(MainActivity.this, "Them thanh cong", Toast.LENGTH_SHORT).show();
+                        getListMoto();
                     }
                 }
             }, new Response.ErrorListener() {

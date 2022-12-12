@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
@@ -28,6 +30,10 @@ import com.example.thivolley.model.Moto;
 import com.example.thivolley.screen.SuaActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -95,6 +101,7 @@ public class MotoAdapter extends RecyclerView.Adapter<MotoAdapter.MotoViewHolder
                                 StringRequest request = new StringRequest(Request.Method.DELETE, BaseURL.BASE_URL_PUT + moto.getId(), new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
+                                        getListMoto();
                                         Toast.makeText(mContext, "Delete success", Toast.LENGTH_SHORT).show();
                                     }
                                 }, new Response.ErrorListener() {
@@ -139,5 +146,39 @@ public class MotoAdapter extends RecyclerView.Adapter<MotoAdapter.MotoViewHolder
             btnSua = itemView.findViewById(R.id.btn_sua);
             btnXoa = itemView.findViewById(R.id.btn_xoa);
         }
+    }
+    private void getListMoto() {
+        RequestQueue queue = Volley.newRequestQueue(mContext);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, BaseURL.BASE_URL_GET, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        listMoto.clear();
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                String name = jsonObject.getString("name");
+                                int price = Integer.parseInt(jsonObject.getString("price"));
+                                String img = jsonObject.getString("image");
+                                String color = jsonObject.getString("color");
+                                String id = jsonObject.getString("id");
+                                String createdAt = jsonObject.getString("createdAt");
+                                listMoto.add(new Moto(createdAt, name, img, color, price, id));
+                                notifyDataSetChanged();
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("TAG", "onErrorResponse: " + error.toString());
+            }
+        });
+
+// Add the request to the RequestQueue.
+        queue.add(jsonArrayRequest);
     }
 }
